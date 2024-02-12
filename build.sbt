@@ -1,5 +1,3 @@
-// import Dependencies._
-
 ThisBuild / scalaVersion := "2.13.12"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.dougluce.dstore"
@@ -10,15 +8,9 @@ val AkkaHttpVersion = "10.6.0"
 val akkaHttp = "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion
 val akkaActor = "com.typesafe.akka" %% "akka-actor" % AkkaVersion
 
-resolvers += "Akka library repository".at("https://repo.akka.io/maven")
+resolvers in ThisBuild += "Akka library repository" at "https://repo.akka.io/maven"
+val commonSettings = Seq(libraryDependencies ++= Seq(akkaHttp, akkaActor))
 
-lazy val root = (project in file("."))
-  .settings(
-    name := "",
-    libraryDependencies ++= Seq(
-      akkaHttp,
-      akkaActor
-    )
-  )
+lazy val server = (project in file("server")).settings(commonSettings)
+lazy val cli = (project in file("cli")).settings(commonSettings)
 
-// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
