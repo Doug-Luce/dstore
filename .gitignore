@@ -1,0 +1,8 @@
+/.bsp/
+src/main/scala/.bsp/
+target/
+.DS_Store
+.bloop/
+.metals/
+target/
+project/
