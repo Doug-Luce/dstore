@@ -13,4 +13,3 @@ val commonSettings = Seq(libraryDependencies ++= Seq(akkaHttp, akkaActor))
 
 lazy val server = (project in file("server")).settings(commonSettings)
 lazy val cli = (project in file("cli")).settings(commonSettings)
-
