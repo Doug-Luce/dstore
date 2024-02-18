@@ -10,7 +10,7 @@ object CLI extends App {
   val socket = new Socket("localhost", 6667)
   println("Connection successful")
   var continue = true
-  val inputPrompt = "DStore>"
+  val inputPrompt = "DStore> "
   val EXIT_COMMAND = "exit"
 
   val inputReader = new BufferedReader(
@@ -26,9 +26,8 @@ object CLI extends App {
       } else {
         val out = new PrintWriter(socket.getOutputStream, true)
         out.println(userInput)
-        
-        val in = inputReader.readLine() 
-        in.flush()
+        out.flush()
+        val in = inputReader.readLine()
         println(in)
       }
     }

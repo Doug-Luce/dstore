@@ -6,37 +6,30 @@ import java.io.InputStreamReader
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import java.util.Random
+import java.net.InetSocketAddress
+import dstore.utils.Connection
 
 object Main extends App {
   println("Server started")
-  val server = new ServerSocket(6667)
+  val connection = Connection()
   var continue = true
-  val socket = server.accept()
-
-  val inputStream = new BufferedReader(
-    new InputStreamReader(socket.getInputStream)
-  )
-
-  val outputStream = new BufferedWriter(
-    new OutputStreamWriter(socket.getOutputStream)
-  )
 
   try {
     while (continue) {
-      val message = inputStream.readLine()
-      if (message == null || message == "exit") {
+      val message = connection.read()
+      if (message == "exit") {
         continue = false
       } else {
         println(message)
-        outputStream.write("test \n")
-        outputStream.flush()
+        // val test = CommandParser.parse(message)
+        connection.write("Ack!")
       }
     }
   } catch {
     case e: Exception => e.printStackTrace()
   } finally {
-    socket.close()
-    server.close()
+    connection.socket.close()
+    connection.server.close()
     println("Server closed")
   }
 }
