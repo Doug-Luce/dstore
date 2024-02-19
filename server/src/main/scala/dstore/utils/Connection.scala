@@ -24,6 +24,7 @@ class Connection(
 
   def read(): String = {
     val message = inputStream.readLine()
+
     if (message != null) message else ""
   }
 
@@ -35,18 +36,14 @@ class Connection(
 
   def handleConnection(): Unit = {
     var serverActive = true
-    try {
-      while (serverActive) {
-        val message = read()
-        val cmdOpt = CommandParser.parse(message)
-        // response to client
-        cmdOpt.map(cmd => write(cmd.execute()))
-      }
-    } catch {
-      case e: Exception => e.printStackTrace()
-    } finally {
-      close()
+    while (serverActive) {
+      val message = read()
+
+      val cmdOpt = CommandParser.parse(message)
+      // response to client
+      cmdOpt.map(cmd => write(cmd.execute()))
     }
+    close()
   }
 }
 

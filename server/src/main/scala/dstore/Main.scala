@@ -16,5 +16,6 @@ import scala.io.StdIn
 
 object Main extends App {
   println("Server started")
+  val hello = "Hello"
   Connection.startServer()
 }
